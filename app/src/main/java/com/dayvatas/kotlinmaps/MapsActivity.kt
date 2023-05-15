@@ -59,6 +59,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         locationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
+                println("yes!")
 
             }
         }
@@ -66,10 +67,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
                 Snackbar.make(binding.root, "Permission Needed For Location!", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission"){
                     //request permission
+                    permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                 }.show()
 
             }else{
                 //request permission
+                permissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
             }
 
         }else{
