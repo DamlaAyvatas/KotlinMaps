@@ -33,6 +33,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
     private lateinit var permissionLauncher : ActivityResultLauncher<String>
     private lateinit var sharedPreferences: SharedPreferences
     private var trackBoolean: Boolean? = null
+    private var selectedLatitude : Double? = null
+    private var selectedLongitude : Double? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +49,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
         registerLauncher()
         sharedPreferences = this.getSharedPreferences("com.dayvatas.kotlinmaps", MODE_PRIVATE)
         trackBoolean = false
+        selectedLatitude = 0.0
+        selectedLongitude = 0.0
 
     }
 
@@ -125,5 +129,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
     override fun onMapLongClick(p0: LatLng) {
         mMap.clear()
         mMap.addMarker(MarkerOptions().position(p0))
+
+        selectedLatitude = p0.latitude
+        selectedLongitude = p0.longitude
+
     }
 }
