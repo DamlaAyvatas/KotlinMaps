@@ -1,10 +1,11 @@
-package com.dayvatas.kotlinmaps
+package com.dayvatas.kotlinmaps.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.dayvatas.kotlinmaps.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
