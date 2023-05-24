@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.room.Room
 import com.dayvatas.kotlinmaps.R
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -23,6 +24,9 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.dayvatas.kotlinmaps.databinding.ActivityMapsBinding
+import com.dayvatas.kotlinmaps.model.Place
+import com.dayvatas.kotlinmaps.roomdb.PlaceDao
+import com.dayvatas.kotlinmaps.roomdb.PlaceDatabase
 import com.google.android.material.snackbar.Snackbar
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
@@ -36,6 +40,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
     private var trackBoolean: Boolean? = null
     private var selectedLatitude : Double? = null
     private var selectedLongitude : Double? = null
+    private lateinit var db : PlaceDatabase
+    private lateinit var placeDao : PlaceDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +59,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
         selectedLatitude = 0.0
         selectedLongitude = 0.0
 
+        db = Room.databaseBuilder(
+            applicationContext,
+            PlaceDatabase::class.java, "Places"
+        )
+            .allowMainThreadQueries()
+            .build()
+
+        placeDao = db.placeDao()
     }
 
     /**
@@ -137,6 +151,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMapLon
     }
 
     fun save(view : View){
+        val place = Place(binding.placeNameText.text.toString(),selectedLatitude!!,selectedLongitude!!)
+        placeDao.insert(place)
 
     }
     fun delete(view : View){
