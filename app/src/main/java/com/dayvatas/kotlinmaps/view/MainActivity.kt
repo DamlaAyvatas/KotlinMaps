@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.addPlace){
             val intent = Intent(this@MainActivity, MapsActivity::class.java)
+            intent.putExtra("info", "new")
             startActivity(intent)                       //menu içindeki itemi bağladım
         }
         return super.onOptionsItemSelected(item)
